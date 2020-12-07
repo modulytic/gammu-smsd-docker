@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  db:
+    image: mariadb:10.5
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_DATABASE: smsd
+      MYSQL_USER: smsd
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+
+  gammu:
+    build: .
+    volumes:
+      - "./conf/smsdrc-user:/app/smsdrc-user"
+    depends_on:
+      - db
+    environment:
+      DB_DB: smsd
+      DB_USER: smsd
+      DB_PASS: password
+      DB_HOST: db
