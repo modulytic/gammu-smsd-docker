@@ -1,7 +1,8 @@
-FROM bitnami/minideb:buster
+FROM debian:buster-slim
 LABEL maintainer="Noah Sandman <noah@modulytic.com>"
 
-RUN install_packages gammu gammu-smsd python3-pip
+RUN apt-get update && apt-get -y upgrade
+RUN apt-get install -qq gammu gammu-smsd python3-pip git
 
 RUN mkdir /app
 WORKDIR /app
